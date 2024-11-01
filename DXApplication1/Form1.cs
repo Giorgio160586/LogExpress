@@ -25,7 +25,7 @@ namespace DXApplication1
 
         private Color selectionColor = Color.FromArgb(255, 33, 66, 131);
 
-        private const string subkey = @"SOFTWARE\Log++";
+        private const string subkey = @"SOFTWARE\LogExpress";
         private List<string> find1Filter { get; set; }
         private List<string> find2Filter { get; set; }
         private List<string> find3Filter { get; set; }
