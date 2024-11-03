@@ -10,10 +10,9 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
-namespace DXApplication1
+namespace LogExpress_NET8
 {
     public partial class Form1 : RibbonForm
     {
@@ -49,7 +48,7 @@ namespace DXApplication1
             ResizeFormToScreenPercentage(0.75);
 
             var process = Environment.Is64BitProcess ? "x64" : "x86";
-            this.Text += $" - v{version} ({process})";
+            Text += $" - v{version} ({process})";
 
             FromMemoEdit.Properties.AdvancedModeOptions.SelectionColor = selectionColor;
             ToMemoEdit.Properties.AdvancedModeOptions.SelectionColor = selectionColor;
@@ -119,12 +118,12 @@ namespace DXApplication1
             Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
             int newWidth = (int)(screenBounds.Width * percentage);
             int newHeight = (int)(screenBounds.Height * percentage);
-            this.Width = newWidth;
-            this.Height = newHeight;
-            this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(
-                (screenBounds.Width - this.Width) / 2,
-                (screenBounds.Height - this.Height) / 2
+            Width = newWidth;
+            Height = newHeight;
+            StartPosition = FormStartPosition.Manual;
+            Location = new Point(
+                (screenBounds.Width - Width) / 2,
+                (screenBounds.Height - Height) / 2
             );
         }
         private void FindBarButtonItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -173,11 +172,11 @@ namespace DXApplication1
 
         private void AddItemToRepository(string filter, RepositoryItemCheckedComboBoxEdit repository)
         {
-            var list = filter.Split(',').Select(s=>s.Trim());
+            var list = filter.Split(',').Select(s => s.Trim());
             foreach (var item in list)
             {
                 if (!string.IsNullOrEmpty(item) && !repository.Items.Contains(item))
-                    repository.Items.Add(item,true);
+                    repository.Items.Add(item, true);
 
             }
         }
@@ -261,7 +260,7 @@ namespace DXApplication1
                 FromMemoEdit.ScrollToCaret();
             }
         }
-        
+
         private void FromMemoEdit_TextChanged(object sender, EventArgs e)
         {
             if (!undoRedoManager.IsUndoOrRedo)
@@ -308,28 +307,22 @@ namespace DXApplication1
 
         private void SaveToRegistry(string registryPath, BarEditItem barEditItem)
         {
-            const string mutexName = "LogExpress";
-            bool createdNew;
-            var mutex = new Mutex(true, mutexName, out createdNew);
-            if (createdNew)
+            var comboBox = ((RepositoryItemCheckedComboBoxEdit)barEditItem.Edit);
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath))
             {
-                var comboBox = ((RepositoryItemCheckedComboBoxEdit)barEditItem.Edit);
-                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath))
+                if (key != null)
                 {
-                    if (key != null)
+                    foreach (string subKeyName in key.GetSubKeyNames())
                     {
-                        foreach (string subKeyName in key.GetSubKeyNames())
+                        key.DeleteSubKeyTree(subKeyName);
+                    }
+                    for (int i = 0; i < comboBox.Items.Count; i++)
+                    {
+                        CheckedListBoxItem item = comboBox.Items[i];
+                        using (RegistryKey itemKey = key.CreateSubKey($"Item{i}"))
                         {
-                            key.DeleteSubKeyTree(subKeyName);
-                        }
-                        for (int i = 0; i < comboBox.Items.Count; i++)
-                        {
-                            CheckedListBoxItem item = comboBox.Items[i];
-                            using (RegistryKey itemKey = key.CreateSubKey($"Item{i}"))
-                            {
-                                itemKey.SetValue("Item", item.Value.ToString());
-                                itemKey.SetValue("Checked", item.CheckState == CheckState.Checked ? "True" : "False");
-                            }
+                            itemKey.SetValue("Item", item.Value.ToString());
+                            itemKey.SetValue("Checked", item.CheckState == CheckState.Checked ? "True" : "False");
                         }
                     }
                 }

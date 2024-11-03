@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DXApplication1
+namespace LogExpress_NET8
 {
     public class UndoRedoManager
     {

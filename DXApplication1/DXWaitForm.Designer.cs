@@ -1,4 +1,4 @@
-﻿namespace DXApplication1
+﻿namespace LogExpress_NET8
 {
     partial class DXWaitForm
     {
@@ -28,60 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressPanel1 = new DevExpress.XtraWaitForm.ProgressPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.SuspendLayout();
+            progressPanel1 = new DevExpress.XtraWaitForm.ProgressPanel();
+            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            tableLayoutPanel1.SuspendLayout();
+            SuspendLayout();
             // 
             // progressPanel1
             // 
-            this.progressPanel1.Appearance.BackColor = System.Drawing.Color.Transparent;
-            this.progressPanel1.Appearance.Options.UseBackColor = true;
-            this.progressPanel1.AppearanceCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.progressPanel1.AppearanceCaption.Options.UseFont = true;
-            this.progressPanel1.AppearanceDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.progressPanel1.AppearanceDescription.Options.UseFont = true;
-            this.progressPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressPanel1.ImageHorzOffset = 20;
-            this.progressPanel1.Location = new System.Drawing.Point(0, 17);
-            this.progressPanel1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.progressPanel1.Name = "progressPanel1";
-            this.progressPanel1.Size = new System.Drawing.Size(246, 39);
-            this.progressPanel1.TabIndex = 0;
-            this.progressPanel1.Text = "progressPanel1";
+            progressPanel1.Appearance.BackColor = System.Drawing.Color.Transparent;
+            progressPanel1.Appearance.Options.UseBackColor = true;
+            progressPanel1.AppearanceCaption.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            progressPanel1.AppearanceCaption.Options.UseFont = true;
+            progressPanel1.AppearanceDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            progressPanel1.AppearanceDescription.Options.UseFont = true;
+            progressPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            progressPanel1.ImageHorzOffset = 20;
+            progressPanel1.Location = new System.Drawing.Point(0, 38);
+            progressPanel1.Margin = new System.Windows.Forms.Padding(0, 7, 0, 7);
+            progressPanel1.Name = "progressPanel1";
+            progressPanel1.Size = new System.Drawing.Size(533, 87);
+            progressPanel1.TabIndex = 0;
+            progressPanel1.Text = "progressPanel1";
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.progressPanel1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 14, 0, 14);
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(246, 73);
-            this.tableLayoutPanel1.TabIndex = 1;
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(progressPanel1, 0, 0);
+            tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 31, 0, 31);
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new System.Drawing.Size(533, 163);
+            tableLayoutPanel1.TabIndex = 1;
             // 
-            // Form1
+            // DXWaitForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(246, 73);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.DoubleBuffered = true;
-            this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Form1";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            ClientSize = new System.Drawing.Size(533, 163);
+            Controls.Add(tableLayoutPanel1);
+            DoubleBuffered = true;
+            Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            Name = "DXWaitForm";
+            StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            Text = "Form1";
+            tableLayoutPanel1.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

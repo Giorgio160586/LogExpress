@@ -1,20 +1,14 @@
 ﻿using DevExpress.XtraWaitForm;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
-namespace DXApplication1
+namespace LogExpress_NET8
 {
     public partial class DXWaitForm : WaitForm
     {
         public DXWaitForm()
         {
             InitializeComponent();
-            this.progressPanel1.AutoHeight = true;
+            progressPanel1.AutoHeight = true;
         }
 
         #region Overrides
