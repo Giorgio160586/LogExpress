@@ -1,8 +1,11 @@
-﻿using DevExpress.XtraBars;
+﻿using DevExpress.Mvvm.Native;
+using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraRichEdit;
+using DevExpress.XtraRichEdit.API.Native;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -16,25 +19,26 @@ namespace LogExpress_NET8
 {
     public partial class Form1 : RibbonForm
     {
-        private UndoRedoManager undoRedoManager;
-
-        private Color color1 = Color.FromArgb(255, 0, 209, 246);
-        private Color color2 = Color.FromArgb(255, 83, 186, 122);
-        private Color color3 = Color.FromArgb(255, 252, 109, 119);
-
-        private Color selectionColor = Color.FromArgb(255, 33, 66, 131);
-
         private const string subkey = @"SOFTWARE\LogExpress";
+
+        private Color[] colors = {
+            Color.FromArgb(255, 0, 209, 246),
+            Color.FromArgb(255, 83, 186, 122),
+            Color.FromArgb(255, 252, 109, 119) };
+
         private List<string> find1Filter { get; set; }
         private List<string> find2Filter { get; set; }
         private List<string> find3Filter { get; set; }
+
+        private List<string> textHistory { get; set; }
+        private int currentIndex;
         public static string version
         {
             get
             {
                 var assembly = System.Reflection.Assembly.GetExecutingAssembly();
                 FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-                return versionInfo.FileVersion;
+                return $"{versionInfo.FileVersion} (BETA) -";
             }
         }
 
@@ -45,25 +49,22 @@ namespace LogExpress_NET8
         {
             InitializeComponent();
 
+            textHistory = new List<string>();
+
             ResizeFormToScreenPercentage(0.75);
 
             var process = Environment.Is64BitProcess ? "x64" : "x86";
             Text += $" - v{version} ({process})";
 
-            FromMemoEdit.Properties.AdvancedModeOptions.SelectionColor = selectionColor;
-            ToMemoEdit.Properties.AdvancedModeOptions.SelectionColor = selectionColor;
-
-            undoRedoManager = new UndoRedoManager();
-
             splitContainerControl1.SplitterPosition = splitContainerControl1.Height / 12 * 4;
 
-            repositoryItemCheckedComboBoxEdit1.Appearance.ForeColor = color1;
-            repositoryItemCheckedComboBoxEdit2.Appearance.ForeColor = color2;
-            repositoryItemCheckedComboBoxEdit3.Appearance.ForeColor = color3;
+            repositoryItemCheckedComboBoxEdit1.Appearance.ForeColor = colors[0];
+            repositoryItemCheckedComboBoxEdit2.Appearance.ForeColor = colors[1];
+            repositoryItemCheckedComboBoxEdit3.Appearance.ForeColor = colors[2];
 
-            barStaticItem2.Appearance.ForeColor = color1;
-            barStaticItem3.Appearance.ForeColor = color2;
-            barStaticItem4.Appearance.ForeColor = color3;
+            barStaticItem2.Appearance.ForeColor = colors[0];
+            barStaticItem3.Appearance.ForeColor = colors[1];
+            barStaticItem4.Appearance.ForeColor = colors[2];
         }
         private void Form1_Activated(object sender, EventArgs e)
         {
@@ -86,7 +87,6 @@ namespace LogExpress_NET8
                 }
             }
         }
-
         private void LoadFromRegistry(string registryPath, BarEditItem barEditItem)
         {
             var comboBox = ((RepositoryItemCheckedComboBoxEdit)barEditItem.Edit);
@@ -130,8 +130,7 @@ namespace LogExpress_NET8
         {
             DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(this, typeof(DXWaitForm), true, true, false);
 
-            var text = Convert.ToString(FromMemoEdit.EditValue);
-            FromMemoEdit.EditValue = string.Empty;
+            var text = FromRichEdit.Text;
 
             AddItemToRepository(Convert.ToString(Find1BarEditItem.EditValue), repositoryItemCheckedComboBoxEdit1);
             AddItemToRepository(Convert.ToString(Find2BarEditItem.EditValue), repositoryItemCheckedComboBoxEdit2);
@@ -164,12 +163,14 @@ namespace LogExpress_NET8
             l = FilterListByCheckItem(l, Contains2BarCheckItem, find2Filter);
             l = FilterListByCheckItem(l, Contains3BarCheckItem, find3Filter);
 
-            ToMemoEdit.Text = string.Join("\n", l.Distinct());
-            FromMemoEdit.Text = text;
+            ToRichEdit.Text = string.Join("\n", l.Distinct());
 
+            CustomHighlightText(FromRichEdit);
+            CustomHighlightText(ToRichEdit);
+
+            ClearMemory();
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
-
         private void AddItemToRepository(string filter, RepositoryItemCheckedComboBoxEdit repository)
         {
             var list = filter.Split(',').Select(s => s.Trim());
@@ -183,11 +184,19 @@ namespace LogExpress_NET8
         private void UpdateBarCaption(BarStaticItem barItem, List<string> findTerms, string[] lines)
         {
             if (findTerms != null && findTerms.Any())
+            {
                 barItem.Caption = string.Join(", ",
                     findTerms.Select(term =>
-                        $"{term} ({lines.Count(f => f.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0)} hits)"));
+                    {
+                        int hitCount = lines.Count(f => f.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0);
+                        term = term.Length > 20 ? term.Substring(0, 17) + "..." : term;
+                        return $"{term} ({hitCount} hits)";
+                    }));
+            }
             else
+            {
                 barItem.Caption = string.Empty;
+            }
         }
         private string[] FilterListByCheckItem(string[] list, BarCheckItem checkItem, List<string> terms)
         {
@@ -195,33 +204,67 @@ namespace LogExpress_NET8
                 return list.Where(f => terms.Any(term => f.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0)).ToArray();
             return list;
         }
-
-        private void ToMemoEdit_CustomHighlightText(object sender, DevExpress.XtraEditors.TextEditCustomHighlightTextEventArgs e)
+        private void CustomHighlightText(RichEditControl richEditControl)
         {
-            Color[] colors = { color1, color2, color3 };
+            ClearHighlight(richEditControl);
             List<string>[] findTerms = { find1Filter, find2Filter, find3Filter };
 
-            // Ciclo attraverso i termini di ricerca e i colori
             for (int i = 0; i < findTerms.Length; i++)
             {
                 if (findTerms[i] != null && findTerms[i].Any())
                 {
                     foreach (var term in findTerms[i])
                     {
-                        e.HighlightWords(term, colors[i]);
+                        HighlightWord(richEditControl, term, colors[i]);
                     }
                 }
             }
         }
+        private void HighlightWord(RichEditControl richEditControl, string word, Color color)
+        {
+            var document = richEditControl.Document;
+            document.BeginUpdate();
+            try
+            {
+                SearchOptions searchOptions = SearchOptions.None;
+                DocumentRange[] foundRanges = document.FindAll(word, searchOptions);
+                foreach (DocumentRange range in foundRanges)
+                {
+                    CharacterProperties cp = document.BeginUpdateCharacters(range);
+                    cp.ForeColor = color;
+                    document.EndUpdateCharacters(cp);
+                }
+            }
+            finally
+            {
+                document.EndUpdate();
+            }
+        }
+
+        private void ClearHighlight(RichEditControl richEditControl)
+        {
+            var document = richEditControl.Document;
+            document.BeginUpdate();
+            try
+            {
+                CharacterProperties defaultProps = document.BeginUpdateCharacters(document.Range);
+                defaultProps.ForeColor = richEditControl.Appearance.Text.ForeColor;
+                document.EndUpdateCharacters(defaultProps);
+            }
+            finally
+            {
+                document.EndUpdate();
+            }
+        }
+
         private void SetText(string text)
         {
             DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(this, typeof(DXWaitForm), true, true, false);
-            FromMemoEdit.SuspendLayout();
-            FromMemoEdit.EditValue = text;
-            FromMemoEdit.ResumeLayout();
+            FromRichEdit.Text = text;
+            AddTextToHistory(text);
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
-        private void FromMemoEdit_KeyDown(object sender, KeyEventArgs e)
+        private void FromRichEdit_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.V)
             {
@@ -231,67 +274,70 @@ namespace LogExpress_NET8
             }
             if (e.Control && e.KeyCode == Keys.Z)
             {
-                undoRedoManager.Undo(FromMemoEdit);
                 e.SuppressKeyPress = true;
                 e.Handled = true;
+                RestorePreviousText();
             }
             else if (e.Control && e.KeyCode == Keys.Y)
             {
-                undoRedoManager.Redo(FromMemoEdit);
                 e.SuppressKeyPress = true;
                 e.Handled = true;
+                RestoreNextText();
             }
         }
-        private void ToMemoEdit_DoubleClick(object sender, EventArgs e)
+        private void ToRichEdit_DoubleClick(object sender, EventArgs e)
         {
-            MemoEdit memoEditSource = sender as MemoEdit;
-            int charIndex = memoEditSource.SelectionStart;
-            int lineIndex = memoEditSource.GetLineFromCharIndex(charIndex);
-            string searchText = memoEditSource.Lines[lineIndex];
+            DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(this, typeof(DXWaitForm), true, true, false);
 
-            int targetLineIndex = Array.FindLastIndex(FromMemoEdit.Lines, line => line.TrimEnd().Equals(searchText.TrimEnd()));
+            var doc = ToRichEdit.Document;
+            Paragraph paragraph = doc.Paragraphs.Get(ToRichEdit.Document.CaretPosition);
+            string text = doc.GetText(paragraph.Range);
+            var searchResults = FromRichEdit.Document.FindAll(text, SearchOptions.None);
 
-
-            if (targetLineIndex != -1)
+            if (searchResults.Count() > 0)
             {
-                int lineStartIndex = FromMemoEdit.GetFirstCharIndexFromLine(targetLineIndex);
-                FromMemoEdit.SelectionStart = lineStartIndex;
-                FromMemoEdit.SelectionLength = 0;
-                FromMemoEdit.ScrollToCaret();
+                var firstResult = searchResults[0];
+                FromRichEdit.Document.CaretPosition = firstResult.Start;
+                FromRichEdit.Document.Selection = firstResult;
+                var currentLineStart = FromRichEdit.Document.Paragraphs.Get(firstResult.Start).Range.Start;
+                FromRichEdit.Document.CaretPosition = currentLineStart;
+                FromRichEdit.ScrollToCaret();
             }
+
+            DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
 
-        private void FromMemoEdit_TextChanged(object sender, EventArgs e)
-        {
-            if (!undoRedoManager.IsUndoOrRedo)
-            {
-                undoRedoManager.AddState(Convert.ToString(FromMemoEdit.EditValue));
-            }
-        }
-        private void Clear2BarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            ToMemoEdit.Clear();
-        }
         private void UpBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ToMemoEdit.SelectionStart = 0;
-            ToMemoEdit.ScrollToCaret();
-            ToMemoEdit.Focus();
+            //ToRichEdit.SelectionStart = 0;
+            //ToRichEdit.ScrollToCaret();
+            //ToRichEdit.Focus();
         }
         private void DownBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var last = ToMemoEdit.Text.LastIndexOf('\n') + 2;
-            if (last > ToMemoEdit.Text.Length)
-                last = ToMemoEdit.Text.Length;
+            //var last = ToRichEdit.Text.LastIndexOf('\n') + 2;
+            //if (last > ToRichEdit.Text.Length)
+            //    last = ToRichEdit.Text.Length;
 
-            ToMemoEdit.SelectionStart = last;
-            ToMemoEdit.ScrollToCaret();
-            ToMemoEdit.Focus();
+            //ToRichEdit.SelectionStart = last;
+            //ToRichEdit.ScrollToCaret();
+            //ToRichEdit.Focus();
         }
         private void Clear1BarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FromMemoEdit.Clear();
+            FromRichEdit.Text = string.Empty;
             SaveReg();
+            ClearMemory();
+        }
+        private void Clear2BarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ToRichEdit.Text = string.Empty;
+            ClearMemory();
+        }
+
+        private void ClearMemory()
+        {
+            System.Diagnostics.Process.GetCurrentProcess().MinWorkingSet = (IntPtr)3000;
         }
         private void SaveReg()
         {
@@ -301,10 +347,9 @@ namespace LogExpress_NET8
 
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subkey))
             {
-                key.SetValue("Text", Convert.ToString(FromMemoEdit.EditValue), RegistryValueKind.String);
+                key.SetValue("Text", FromRichEdit.Text, RegistryValueKind.String);
             }
         }
-
         private void SaveToRegistry(string registryPath, BarEditItem barEditItem)
         {
             var comboBox = ((RepositoryItemCheckedComboBoxEdit)barEditItem.Edit);
@@ -328,56 +373,63 @@ namespace LogExpress_NET8
                 }
             }
         }
-
         private void UndoBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            undoRedoManager.Undo(FromMemoEdit);
+            RestorePreviousText();
         }
         private void RedoBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            undoRedoManager.Redo(FromMemoEdit);
+            RestoreNextText();
         }
-        private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+
+        private void AddTextToHistory(string newText)
         {
-            if (e.Button.Kind == DevExpress.XtraEditors.Controls.ButtonPredefines.Search)
+            if (textHistory.Count() == 0 || textHistory.Last() != newText)
             {
-                string searchText = ((DevExpress.XtraEditors.ButtonEdit)sender).Text;
-                if (!string.IsNullOrEmpty(searchText))
-                {
-                    searchStartIndex = FindAndHighlightText(FromMemoEdit.Text, searchText, searchStartIndex);
-                    if (searchStartIndex == -1)
-                        searchStartIndex = FindAndHighlightText(FromMemoEdit.Text, searchText, 0);
-                }
+                textHistory.Add(newText);
+                currentIndex++;
             }
-            else
+        }
+
+        public void RestorePreviousText()
+        {
+            if (currentIndex > 0)
             {
-                ((DevExpress.XtraEditors.ButtonEdit)sender).EditValue = string.Empty;
-                SaveReg();
+                currentIndex--;
+                FromRichEdit.Text = textHistory[currentIndex];
+            }
+        }
+
+        public void RestoreNextText()
+        {
+            if (currentIndex < textHistory.Count - 1)
+            {
+                currentIndex++;
+                FromRichEdit.Text = textHistory[currentIndex];
             }
 
         }
-        private int FindAndHighlightText(string memoText, string searchText, int startIndex)
-        {
-            if (startIndex < 0) startIndex = 0;
-            int index = memoText.IndexOf(searchText, startIndex, StringComparison.OrdinalIgnoreCase);
-            if (index != -1)
-            {
-                FromMemoEdit.SelectionStart = index;
-                FromMemoEdit.SelectionLength = searchText.Length;
-                FromMemoEdit.ScrollToCaret();
-                FromMemoEdit.Focus();
-                return index + searchText.Length;
-            }
-            return -1;
-        }
-
         private void repositoryItemCheckedComboBoxEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
+
             if (e.Button.Index == 1)
             {
-                ((CheckedComboBoxEdit)sender).Clear();
-                ((CheckedComboBoxEdit)sender).Properties.Items.Clear();
+                var checkedComboBox = (CheckedComboBoxEdit)sender;
+                var itemsToRemoveList = ((CheckedComboBoxEdit)sender).Text.Split(',').Select(s => s.Trim()).ToList();
+                for (int i = checkedComboBox.Properties.Items.Count - 1; i >= 0; i--)
+                {
+                    var item = checkedComboBox.Properties.Items[i];
+                    if (itemsToRemoveList.Contains(item.Value))
+                        checkedComboBox.Properties.Items.Remove(item);
+                }
+                ((CheckedComboBoxEdit)sender).Text = String.Empty;
             }
+        }
+
+        private void FromRichEdit_Leave(object sender, EventArgs e)
+        {
+            AddTextToHistory(FromRichEdit.Text);
+
         }
     }
 }
