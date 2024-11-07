@@ -64,14 +64,17 @@
             barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
             barStaticItem4 = new DevExpress.XtraBars.BarStaticItem();
             bar1 = new DevExpress.XtraBars.Bar();
-            UpBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
-            DownBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            TagToBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             Clear2BarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            UpToBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            DownToBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             standaloneBarDockControl2 = new DevExpress.XtraBars.StandaloneBarDockControl();
             bar2 = new DevExpress.XtraBars.Bar();
             UndoBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             RedoBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             Clear1BarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            UpFromBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            DownFromBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -143,7 +146,7 @@
             ribbonControl.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
             ribbonControl.ShowQatLocationSelector = false;
             ribbonControl.ShowToolbarCustomizeItem = false;
-            ribbonControl.Size = new System.Drawing.Size(1897, 308);
+            ribbonControl.Size = new System.Drawing.Size(1929, 308);
             ribbonControl.Toolbar.ShowCustomizeItem = false;
             // 
             // skinRibbonGalleryBarItem
@@ -199,7 +202,7 @@
             UpBarButtonItem2.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("UpBarButtonItem2.ImageOptions.SvgImage");
             UpBarButtonItem2.Name = "UpBarButtonItem2";
             UpBarButtonItem2.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-            UpBarButtonItem2.ItemClick += UpBarButtonItem_ItemClick;
+            UpBarButtonItem2.ItemClick += UpFromBarButtonItem_ItemClick;
             // 
             // Down2BarButtonItem
             // 
@@ -208,7 +211,6 @@
             Down2BarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("Down2BarButtonItem.ImageOptions.SvgImage");
             Down2BarButtonItem.Name = "Down2BarButtonItem";
             Down2BarButtonItem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText;
-            Down2BarButtonItem.ItemClick += DownBarButtonItem_ItemClick;
             // 
             // Contains1BarCheckItem
             // 
@@ -341,7 +343,7 @@
             // 
             splitContainerControl1.Panel2.Controls.Add(layoutControl1);
             splitContainerControl1.Panel2.Text = "Panel2";
-            splitContainerControl1.Size = new System.Drawing.Size(1897, 938);
+            splitContainerControl1.Size = new System.Drawing.Size(1929, 954);
             splitContainerControl1.SplitterPosition = 331;
             splitContainerControl1.TabIndex = 4;
             // 
@@ -355,7 +357,7 @@
             layoutControl2.Name = "layoutControl2";
             layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2256, 764, 1462, 900);
             layoutControl2.Root = layoutControlGroup1;
-            layoutControl2.Size = new System.Drawing.Size(1897, 331);
+            layoutControl2.Size = new System.Drawing.Size(1929, 331);
             layoutControl2.TabIndex = 5;
             layoutControl2.Text = "layoutControl2";
             // 
@@ -363,11 +365,11 @@
             // 
             standaloneBarDockControl3.CausesValidation = false;
             standaloneBarDockControl3.IsVertical = true;
-            standaloneBarDockControl3.Location = new System.Drawing.Point(1817, 12);
+            standaloneBarDockControl3.Location = new System.Drawing.Point(1811, 12);
             standaloneBarDockControl3.Manager = barManager1;
             standaloneBarDockControl3.Margin = new System.Windows.Forms.Padding(1362046);
             standaloneBarDockControl3.Name = "standaloneBarDockControl3";
-            standaloneBarDockControl3.Size = new System.Drawing.Size(70, 270);
+            standaloneBarDockControl3.Size = new System.Drawing.Size(70, 390);
             standaloneBarDockControl3.Text = "standaloneBarDockControl3";
             // 
             // barManager1
@@ -380,8 +382,8 @@
             barManager1.DockControls.Add(standaloneBarDockControl2);
             barManager1.DockControls.Add(standaloneBarDockControl3);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barStaticItem2, barStaticItem3, barStaticItem4, UpBarButtonItem, DownBarButtonItem, Clear2BarButtonItem, UndoBarButtonItem, RedoBarButtonItem, Clear1BarButtonItem });
-            barManager1.MaxItemId = 12;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barStaticItem2, barStaticItem3, barStaticItem4, UpToBarButtonItem, DownToBarButtonItem, Clear2BarButtonItem, UndoBarButtonItem, RedoBarButtonItem, Clear1BarButtonItem, UpFromBarButtonItem, DownFromBarButtonItem, TagToBarButtonItem });
+            barManager1.MaxItemId = 15;
             barManager1.StatusBar = bar3;
             // 
             // bar3
@@ -422,7 +424,7 @@
             bar1.DockRow = 0;
             bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
             bar1.FloatLocation = new System.Drawing.Point(1662, 1134);
-            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(UpBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(DownBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(Clear2BarButtonItem) });
+            bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(TagToBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(Clear2BarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(UpToBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(DownToBarButtonItem) });
             bar1.OptionsBar.AllowQuickCustomization = false;
             bar1.OptionsBar.AutoPopupMode = DevExpress.XtraBars.BarAutoPopupMode.None;
             bar1.OptionsBar.DisableClose = true;
@@ -432,21 +434,13 @@
             bar1.StandaloneBarDockControl = standaloneBarDockControl2;
             bar1.Text = "Custom 3";
             // 
-            // UpBarButtonItem
+            // TagToBarButtonItem
             // 
-            UpBarButtonItem.Caption = "Up";
-            UpBarButtonItem.Id = 3;
-            UpBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("UpBarButtonItem.ImageOptions.SvgImage");
-            UpBarButtonItem.Name = "UpBarButtonItem";
-            UpBarButtonItem.ItemClick += UpBarButtonItem_ItemClick;
-            // 
-            // DownBarButtonItem
-            // 
-            DownBarButtonItem.Caption = "Down";
-            DownBarButtonItem.Id = 4;
-            DownBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("DownBarButtonItem.ImageOptions.SvgImage");
-            DownBarButtonItem.Name = "DownBarButtonItem";
-            DownBarButtonItem.ItemClick += DownBarButtonItem_ItemClick;
+            TagToBarButtonItem.Caption = "barButtonItem1";
+            TagToBarButtonItem.Id = 14;
+            TagToBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("TagToBarButtonItem.ImageOptions.SvgImage");
+            TagToBarButtonItem.Name = "TagToBarButtonItem";
+            TagToBarButtonItem.ItemClick += TagToBarButtonItem_ItemClick;
             // 
             // Clear2BarButtonItem
             // 
@@ -456,15 +450,31 @@
             Clear2BarButtonItem.Name = "Clear2BarButtonItem";
             Clear2BarButtonItem.ItemClick += Clear2BarButtonItem_ItemClick;
             // 
+            // UpToBarButtonItem
+            // 
+            UpToBarButtonItem.Caption = "Up";
+            UpToBarButtonItem.Id = 3;
+            UpToBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("UpToBarButtonItem.ImageOptions.SvgImage");
+            UpToBarButtonItem.Name = "UpToBarButtonItem";
+            UpToBarButtonItem.ItemClick += UpToBarButtonItem_ItemClick;
+            // 
+            // DownToBarButtonItem
+            // 
+            DownToBarButtonItem.Caption = "Down";
+            DownToBarButtonItem.Id = 4;
+            DownToBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("DownToBarButtonItem.ImageOptions.SvgImage");
+            DownToBarButtonItem.Name = "DownToBarButtonItem";
+            DownToBarButtonItem.ItemClick += DownToBarButtonItem_ItemClick;
+            // 
             // standaloneBarDockControl2
             // 
             standaloneBarDockControl2.CausesValidation = false;
             standaloneBarDockControl2.IsVertical = true;
-            standaloneBarDockControl2.Location = new System.Drawing.Point(1817, 12);
+            standaloneBarDockControl2.Location = new System.Drawing.Point(1849, 12);
             standaloneBarDockControl2.Manager = barManager1;
             standaloneBarDockControl2.Margin = new System.Windows.Forms.Padding(397621152);
             standaloneBarDockControl2.Name = "standaloneBarDockControl2";
-            standaloneBarDockControl2.Size = new System.Drawing.Size(70, 270);
+            standaloneBarDockControl2.Size = new System.Drawing.Size(70, 330);
             standaloneBarDockControl2.Text = "standaloneBarDockControl2";
             // 
             // bar2
@@ -474,7 +484,7 @@
             bar2.DockRow = 0;
             bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
             bar2.FloatLocation = new System.Drawing.Point(1912, 614);
-            bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(UndoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(RedoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(Clear1BarButtonItem) });
+            bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(UndoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(RedoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(Clear1BarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(UpFromBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(DownFromBarButtonItem) });
             bar2.OptionsBar.AllowQuickCustomization = false;
             bar2.OptionsBar.AutoPopupMode = DevExpress.XtraBars.BarAutoPopupMode.None;
             bar2.OptionsBar.DisableClose = true;
@@ -508,21 +518,35 @@
             Clear1BarButtonItem.Name = "Clear1BarButtonItem";
             Clear1BarButtonItem.ItemClick += Clear1BarButtonItem_ItemClick;
             // 
+            // UpFromBarButtonItem
+            // 
+            UpFromBarButtonItem.Id = 12;
+            UpFromBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("UpFromBarButtonItem.ImageOptions.SvgImage");
+            UpFromBarButtonItem.Name = "UpFromBarButtonItem";
+            UpFromBarButtonItem.ItemClick += UpFromBarButtonItem_ItemClick;
+            // 
+            // DownFromBarButtonItem
+            // 
+            DownFromBarButtonItem.Id = 13;
+            DownFromBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("DownFromBarButtonItem.ImageOptions.SvgImage");
+            DownFromBarButtonItem.Name = "DownFromBarButtonItem";
+            DownFromBarButtonItem.ItemClick += DownFromBarButtonItem_ItemClick;
+            // 
             // barDockControlTop
             // 
             barDockControlTop.CausesValidation = false;
             barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             barDockControlTop.Location = new System.Drawing.Point(0, 0);
             barDockControlTop.Manager = barManager1;
-            barDockControlTop.Size = new System.Drawing.Size(1897, 0);
+            barDockControlTop.Size = new System.Drawing.Size(1929, 0);
             // 
             // barDockControlBottom
             // 
             barDockControlBottom.CausesValidation = false;
             barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            barDockControlBottom.Location = new System.Drawing.Point(0, 1246);
+            barDockControlBottom.Location = new System.Drawing.Point(0, 1262);
             barDockControlBottom.Manager = barManager1;
-            barDockControlBottom.Size = new System.Drawing.Size(1897, 48);
+            barDockControlBottom.Size = new System.Drawing.Size(1929, 48);
             // 
             // barDockControlLeft
             // 
@@ -530,20 +554,20 @@
             barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             barDockControlLeft.Location = new System.Drawing.Point(0, 0);
             barDockControlLeft.Manager = barManager1;
-            barDockControlLeft.Size = new System.Drawing.Size(0, 1246);
+            barDockControlLeft.Size = new System.Drawing.Size(0, 1262);
             // 
             // barDockControlRight
             // 
             barDockControlRight.CausesValidation = false;
             barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            barDockControlRight.Location = new System.Drawing.Point(1897, 0);
+            barDockControlRight.Location = new System.Drawing.Point(1929, 0);
             barDockControlRight.Manager = barManager1;
-            barDockControlRight.Size = new System.Drawing.Size(0, 1246);
+            barDockControlRight.Size = new System.Drawing.Size(0, 1262);
             // 
             // FromRichEdit
             // 
             FromRichEdit.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Simple;
-            FromRichEdit.Appearance.Text.Font = new System.Drawing.Font("Consolas", 11F);
+            FromRichEdit.Appearance.Text.Font = new System.Drawing.Font("JetBrains Mono", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             FromRichEdit.Appearance.Text.ForeColor = System.Drawing.SystemColors.ScrollBar;
             FromRichEdit.Appearance.Text.Options.UseFont = true;
             FromRichEdit.Appearance.Text.Options.UseForeColor = true;
@@ -557,14 +581,14 @@
             FromRichEdit.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
             FromRichEdit.Options.HorizontalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
             FromRichEdit.Options.VerticalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
-            FromRichEdit.Size = new System.Drawing.Size(1803, 307);
+            FromRichEdit.Size = new System.Drawing.Size(1797, 388);
             FromRichEdit.TabIndex = 6;
             FromRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
             FromRichEdit.Views.SimpleView.BackColor = System.Drawing.Color.FromArgb(37, 37, 38);
             FromRichEdit.Views.SimpleView.Padding = new DevExpress.Portable.PortablePadding(4);
             FromRichEdit.Views.SimpleView.WordWrap = false;
-            FromRichEdit.Leave += FromRichEdit_Leave;
             FromRichEdit.KeyDown += FromRichEdit_KeyDown;
+            FromRichEdit.Leave += FromRichEdit_Leave;
             // 
             // layoutControlGroup1
             // 
@@ -572,7 +596,7 @@
             layoutControlGroup1.GroupBordersVisible = false;
             layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem3, layoutControlItem5 });
             layoutControlGroup1.Name = "Root";
-            layoutControlGroup1.Size = new System.Drawing.Size(1897, 331);
+            layoutControlGroup1.Size = new System.Drawing.Size(1891, 412);
             layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem3
@@ -580,17 +604,17 @@
             layoutControlItem3.Control = FromRichEdit;
             layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             layoutControlItem3.Name = "layoutControlItem2";
-            layoutControlItem3.Size = new System.Drawing.Size(1807, 311);
+            layoutControlItem3.Size = new System.Drawing.Size(1801, 392);
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             layoutControlItem5.Control = standaloneBarDockControl3;
-            layoutControlItem5.Location = new System.Drawing.Point(1807, 0);
+            layoutControlItem5.Location = new System.Drawing.Point(1801, 0);
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 2, 0);
-            layoutControlItem5.Size = new System.Drawing.Size(70, 311);
+            layoutControlItem5.Size = new System.Drawing.Size(70, 392);
             layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem5.TextVisible = false;
             // 
@@ -604,14 +628,14 @@
             layoutControl1.Name = "layoutControl1";
             layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2256, 764, 1462, 900);
             layoutControl1.Root = Root;
-            layoutControl1.Size = new System.Drawing.Size(1897, 585);
+            layoutControl1.Size = new System.Drawing.Size(1929, 601);
             layoutControl1.TabIndex = 4;
             layoutControl1.Text = "layoutControl1";
             // 
             // ToRichEdit
             // 
             ToRichEdit.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Simple;
-            ToRichEdit.Appearance.Text.Font = new System.Drawing.Font("Consolas", 11F);
+            ToRichEdit.Appearance.Text.Font = new System.Drawing.Font("JetBrains Mono", 10F);
             ToRichEdit.Appearance.Text.ForeColor = System.Drawing.SystemColors.ScrollBar;
             ToRichEdit.Appearance.Text.Options.UseFont = true;
             ToRichEdit.Appearance.Text.Options.UseForeColor = true;
@@ -625,7 +649,7 @@
             ToRichEdit.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
             ToRichEdit.Options.HorizontalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
             ToRichEdit.Options.VerticalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
-            ToRichEdit.Size = new System.Drawing.Size(1803, 561);
+            ToRichEdit.Size = new System.Drawing.Size(1835, 577);
             ToRichEdit.TabIndex = 6;
             ToRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
             ToRichEdit.Views.SimpleView.BackColor = System.Drawing.Color.FromArgb(37, 37, 38);
@@ -639,7 +663,7 @@
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1 });
             Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(1897, 585);
+            Root.Size = new System.Drawing.Size(1929, 601);
             Root.TextVisible = false;
             // 
             // layoutControlItem2
@@ -647,17 +671,17 @@
             layoutControlItem2.Control = ToRichEdit;
             layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(1807, 565);
+            layoutControlItem2.Size = new System.Drawing.Size(1839, 581);
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = standaloneBarDockControl2;
-            layoutControlItem1.Location = new System.Drawing.Point(1807, 0);
+            layoutControlItem1.Location = new System.Drawing.Point(1839, 0);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 2, 0);
-            layoutControlItem1.Size = new System.Drawing.Size(70, 565);
+            layoutControlItem1.Size = new System.Drawing.Size(70, 581);
             layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
@@ -670,7 +694,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1897, 1294);
+            ClientSize = new System.Drawing.Size(1929, 1310);
             Controls.Add(splitContainerControl1);
             Controls.Add(ribbonControl);
             Controls.Add(barDockControlLeft);
@@ -679,7 +703,7 @@
             Controls.Add(barDockControlTop);
             IconOptions.Image = (System.Drawing.Image)resources.GetObject("Form1.IconOptions.Image");
             Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            MinimumSize = new System.Drawing.Size(1721, 1206);
+            MinimumSize = new System.Drawing.Size(1689, 1190);
             Name = "Form1";
             Ribbon = ribbonControl;
             Text = "LogExpress NET8 - BUG Hunters";
@@ -737,8 +761,8 @@
         private DevExpress.XtraBars.BarCheckItem Contains3BarCheckItem;
         private DevExpress.XtraBars.BarCheckItem Contains2BarCheckItem;
         private DevExpress.XtraBars.Bar bar1;
-        private DevExpress.XtraBars.BarButtonItem UpBarButtonItem;
-        private DevExpress.XtraBars.BarButtonItem DownBarButtonItem;
+        private DevExpress.XtraBars.BarButtonItem UpToBarButtonItem;
+        private DevExpress.XtraBars.BarButtonItem DownToBarButtonItem;
         private DevExpress.XtraBars.BarButtonItem Clear2BarButtonItem;
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraRichEdit.RichEditControl ToRichEdit;
@@ -766,5 +790,8 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repositoryItemCheckedComboBoxEdit1;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repositoryItemCheckedComboBoxEdit2;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit repositoryItemCheckedComboBoxEdit3;
+        private DevExpress.XtraBars.BarButtonItem UpFromBarButtonItem;
+        private DevExpress.XtraBars.BarButtonItem DownFromBarButtonItem;
+        private DevExpress.XtraBars.BarButtonItem TagToBarButtonItem;
     }
 }

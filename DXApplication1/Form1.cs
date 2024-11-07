@@ -164,6 +164,9 @@ namespace LogExpress_NET8
             l = FilterListByCheckItem(l, Contains3BarCheckItem, find3Filter);
 
             ToRichEdit.Text = string.Join("\n", l.Distinct());
+            Document document = ToRichEdit.Document;
+            document.DefaultParagraphProperties.LineSpacingType = ParagraphLineSpacing.Multiple;
+            document.DefaultParagraphProperties.LineSpacingMultiplier = 1.2f;
 
             CustomHighlightText(FromRichEdit);
             CustomHighlightText(ToRichEdit);
@@ -247,8 +250,9 @@ namespace LogExpress_NET8
             document.BeginUpdate();
             try
             {
-                CharacterProperties defaultProps = document.BeginUpdateCharacters(document.Range);
-                defaultProps.ForeColor = richEditControl.Appearance.Text.ForeColor;
+                DocumentRange range = document.Range;
+                CharacterProperties defaultProps = document.BeginUpdateCharacters(range);
+                defaultProps.ForeColor = System.Drawing.SystemColors.ScrollBar;
                 document.EndUpdateCharacters(defaultProps);
             }
             finally
@@ -261,6 +265,9 @@ namespace LogExpress_NET8
         {
             DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(this, typeof(DXWaitForm), true, true, false);
             FromRichEdit.Text = text;
+            Document document = FromRichEdit.Document;
+            document.DefaultParagraphProperties.LineSpacingType = ParagraphLineSpacing.Multiple;
+            document.DefaultParagraphProperties.LineSpacingMultiplier = 1.2f;
             AddTextToHistory(text);
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
@@ -307,22 +314,6 @@ namespace LogExpress_NET8
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
 
-        private void UpBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //ToRichEdit.SelectionStart = 0;
-            //ToRichEdit.ScrollToCaret();
-            //ToRichEdit.Focus();
-        }
-        private void DownBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //var last = ToRichEdit.Text.LastIndexOf('\n') + 2;
-            //if (last > ToRichEdit.Text.Length)
-            //    last = ToRichEdit.Text.Length;
-
-            //ToRichEdit.SelectionStart = last;
-            //ToRichEdit.ScrollToCaret();
-            //ToRichEdit.Focus();
-        }
         private void Clear1BarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
             FromRichEdit.Text = string.Empty;
@@ -430,6 +421,52 @@ namespace LogExpress_NET8
         {
             AddTextToHistory(FromRichEdit.Text);
 
+        }
+
+        private void UpToBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MoveCaretToParagraph(false, ToRichEdit);
+        }
+
+        private void DownToBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MoveCaretToParagraph(true, ToRichEdit);
+        }
+
+        private void UpFromBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MoveCaretToParagraph(false, FromRichEdit);
+        }
+
+        private void DownFromBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MoveCaretToParagraph(true, FromRichEdit);
+
+        }
+        private void MoveCaretToParagraph(bool moveToLastParagraph, RichEditControl richEditControl)
+        {
+            Document document = richEditControl.Document;
+            Paragraph targetParagraph = moveToLastParagraph
+                ? document.Paragraphs[document.Paragraphs.Count - 1]
+                : document.Paragraphs[0];
+            DocumentPosition startOfTargetParagraph = targetParagraph.Range.Start;
+            richEditControl.Document.CaretPosition = startOfTargetParagraph;
+            richEditControl.ScrollToCaret();
+        }
+        private void TagToBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Document document = ToRichEdit.Document;
+            DocumentPosition caretPosition = document.CaretPosition;
+            int paragraphIndex = document.Paragraphs.Get(caretPosition).Index;
+            Paragraph selectedParagraph = document.Paragraphs[paragraphIndex];
+            CharacterProperties properties = document.BeginUpdateCharacters(selectedParagraph.Range);
+            Color defaultColor = Color.Transparent;
+            Color highlightColor = Color.FromArgb(33, 66, 131);
+            if (properties.BackColor == highlightColor)
+                properties.BackColor = defaultColor;
+            else
+                properties.BackColor = highlightColor;
+            document.EndUpdateCharacters(properties);
         }
     }
 }
