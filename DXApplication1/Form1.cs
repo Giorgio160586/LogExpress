@@ -192,9 +192,11 @@ namespace LogExpress_NET8
                     findTerms.Select(term =>
                     {
                         int hitCount = lines.Count(f => f.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0);
-                        term = term.Length > 20 ? term.Substring(0, 17) + "..." : term;
+                        if (hitCount == 0)
+                            return string.Empty;
+                        term = term.Length > 40 ? term.Substring(0, 37) + "..." : term;
                         return $"{term} ({hitCount} hits)";
-                    }));
+                    }).Where(f=> !string.IsNullOrEmpty(f)).ToList());
             }
             else
             {
@@ -402,9 +404,17 @@ namespace LogExpress_NET8
         }
         private void repositoryItemCheckedComboBoxEdit1_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-
             if (e.Button.Index == 1)
             {
+                var args = new XtraMessageBoxArgs()
+                {
+                    Caption = "Confirmation",
+                    Text = $"Are you sure you want to delete?",
+                    Buttons = new DialogResult[] { DialogResult.Yes, DialogResult.No },
+                };
+                if (XtraMessageBox.Show(args) == DialogResult.No)
+                    return;
+
                 var checkedComboBox = (CheckedComboBoxEdit)sender;
                 var itemsToRemoveList = ((CheckedComboBoxEdit)sender).Text.Split(',').Select(s => s.Trim()).ToList();
                 for (int i = checkedComboBox.Properties.Items.Count - 1; i >= 0; i--)
