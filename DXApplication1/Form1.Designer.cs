@@ -1,4 +1,6 @@
-﻿namespace LogExpress_NET8
+﻿using DevExpress.Portable;
+
+namespace LogExpress_NET8
 {
     partial class Form1
     {
@@ -72,6 +74,7 @@
             bar2 = new DevExpress.XtraBars.Bar();
             UndoBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             RedoBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            TagFromBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             Clear1BarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             UpFromBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             DownFromBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
@@ -146,7 +149,7 @@
             ribbonControl.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
             ribbonControl.ShowQatLocationSelector = false;
             ribbonControl.ShowToolbarCustomizeItem = false;
-            ribbonControl.Size = new System.Drawing.Size(1929, 308);
+            ribbonControl.Size = new System.Drawing.Size(1927, 308);
             ribbonControl.Toolbar.ShowCustomizeItem = false;
             // 
             // skinRibbonGalleryBarItem
@@ -343,7 +346,7 @@
             // 
             splitContainerControl1.Panel2.Controls.Add(layoutControl1);
             splitContainerControl1.Panel2.Text = "Panel2";
-            splitContainerControl1.Size = new System.Drawing.Size(1929, 954);
+            splitContainerControl1.Size = new System.Drawing.Size(1927, 973);
             splitContainerControl1.SplitterPosition = 331;
             splitContainerControl1.TabIndex = 4;
             // 
@@ -357,7 +360,7 @@
             layoutControl2.Name = "layoutControl2";
             layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2256, 764, 1462, 900);
             layoutControl2.Root = layoutControlGroup1;
-            layoutControl2.Size = new System.Drawing.Size(1929, 331);
+            layoutControl2.Size = new System.Drawing.Size(1927, 331);
             layoutControl2.TabIndex = 5;
             layoutControl2.Text = "layoutControl2";
             // 
@@ -365,11 +368,11 @@
             // 
             standaloneBarDockControl3.CausesValidation = false;
             standaloneBarDockControl3.IsVertical = true;
-            standaloneBarDockControl3.Location = new System.Drawing.Point(1811, 12);
+            standaloneBarDockControl3.Location = new System.Drawing.Point(1809, 12);
             standaloneBarDockControl3.Manager = barManager1;
             standaloneBarDockControl3.Margin = new System.Windows.Forms.Padding(1362046);
             standaloneBarDockControl3.Name = "standaloneBarDockControl3";
-            standaloneBarDockControl3.Size = new System.Drawing.Size(70, 390);
+            standaloneBarDockControl3.Size = new System.Drawing.Size(70, 450);
             standaloneBarDockControl3.Text = "standaloneBarDockControl3";
             // 
             // barManager1
@@ -382,8 +385,8 @@
             barManager1.DockControls.Add(standaloneBarDockControl2);
             barManager1.DockControls.Add(standaloneBarDockControl3);
             barManager1.Form = this;
-            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barStaticItem2, barStaticItem3, barStaticItem4, UpToBarButtonItem, DownToBarButtonItem, Clear2BarButtonItem, UndoBarButtonItem, RedoBarButtonItem, Clear1BarButtonItem, UpFromBarButtonItem, DownFromBarButtonItem, TagToBarButtonItem });
-            barManager1.MaxItemId = 15;
+            barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] { barStaticItem2, barStaticItem3, barStaticItem4, UpToBarButtonItem, DownToBarButtonItem, Clear2BarButtonItem, UndoBarButtonItem, RedoBarButtonItem, Clear1BarButtonItem, UpFromBarButtonItem, DownFromBarButtonItem, TagToBarButtonItem, TagFromBarButtonItem });
+            barManager1.MaxItemId = 16;
             barManager1.StatusBar = bar3;
             // 
             // bar3
@@ -436,7 +439,6 @@
             // 
             // TagToBarButtonItem
             // 
-            TagToBarButtonItem.Caption = "barButtonItem1";
             TagToBarButtonItem.Id = 14;
             TagToBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("TagToBarButtonItem.ImageOptions.SvgImage");
             TagToBarButtonItem.Name = "TagToBarButtonItem";
@@ -470,7 +472,7 @@
             // 
             standaloneBarDockControl2.CausesValidation = false;
             standaloneBarDockControl2.IsVertical = true;
-            standaloneBarDockControl2.Location = new System.Drawing.Point(1849, 12);
+            standaloneBarDockControl2.Location = new System.Drawing.Point(1847, 12);
             standaloneBarDockControl2.Manager = barManager1;
             standaloneBarDockControl2.Margin = new System.Windows.Forms.Padding(397621152);
             standaloneBarDockControl2.Name = "standaloneBarDockControl2";
@@ -484,7 +486,7 @@
             bar2.DockRow = 0;
             bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Standalone;
             bar2.FloatLocation = new System.Drawing.Point(1912, 614);
-            bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(UndoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(RedoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(Clear1BarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(UpFromBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(DownFromBarButtonItem) });
+            bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] { new DevExpress.XtraBars.LinkPersistInfo(UndoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(RedoBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(TagFromBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(Clear1BarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(UpFromBarButtonItem), new DevExpress.XtraBars.LinkPersistInfo(DownFromBarButtonItem) });
             bar2.OptionsBar.AllowQuickCustomization = false;
             bar2.OptionsBar.AutoPopupMode = DevExpress.XtraBars.BarAutoPopupMode.None;
             bar2.OptionsBar.DisableClose = true;
@@ -509,6 +511,13 @@
             RedoBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("RedoBarButtonItem.ImageOptions.SvgImage");
             RedoBarButtonItem.Name = "RedoBarButtonItem";
             RedoBarButtonItem.ItemClick += RedoBarButtonItem_ItemClick;
+            // 
+            // TagFromBarButtonItem
+            // 
+            TagFromBarButtonItem.Id = 15;
+            TagFromBarButtonItem.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("TagFromBarButtonItem.ImageOptions.SvgImage");
+            TagFromBarButtonItem.Name = "TagFromBarButtonItem";
+            TagFromBarButtonItem.ItemClick += TagFromBarButtonItem_ItemClick;
             // 
             // Clear1BarButtonItem
             // 
@@ -538,15 +547,15 @@
             barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             barDockControlTop.Location = new System.Drawing.Point(0, 0);
             barDockControlTop.Manager = barManager1;
-            barDockControlTop.Size = new System.Drawing.Size(1929, 0);
+            barDockControlTop.Size = new System.Drawing.Size(1927, 0);
             // 
             // barDockControlBottom
             // 
             barDockControlBottom.CausesValidation = false;
             barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            barDockControlBottom.Location = new System.Drawing.Point(0, 1262);
+            barDockControlBottom.Location = new System.Drawing.Point(0, 1281);
             barDockControlBottom.Manager = barManager1;
-            barDockControlBottom.Size = new System.Drawing.Size(1929, 48);
+            barDockControlBottom.Size = new System.Drawing.Size(1927, 48);
             // 
             // barDockControlLeft
             // 
@@ -554,15 +563,15 @@
             barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             barDockControlLeft.Location = new System.Drawing.Point(0, 0);
             barDockControlLeft.Manager = barManager1;
-            barDockControlLeft.Size = new System.Drawing.Size(0, 1262);
+            barDockControlLeft.Size = new System.Drawing.Size(0, 1281);
             // 
             // barDockControlRight
             // 
             barDockControlRight.CausesValidation = false;
             barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            barDockControlRight.Location = new System.Drawing.Point(1929, 0);
+            barDockControlRight.Location = new System.Drawing.Point(1927, 0);
             barDockControlRight.Manager = barManager1;
-            barDockControlRight.Size = new System.Drawing.Size(0, 1262);
+            barDockControlRight.Size = new System.Drawing.Size(0, 1281);
             // 
             // FromRichEdit
             // 
@@ -581,12 +590,12 @@
             FromRichEdit.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
             FromRichEdit.Options.HorizontalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
             FromRichEdit.Options.VerticalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
-            FromRichEdit.Size = new System.Drawing.Size(1797, 388);
+            FromRichEdit.Size = new System.Drawing.Size(1795, 448);
             FromRichEdit.TabIndex = 6;
-            FromRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
             FromRichEdit.Views.SimpleView.BackColor = System.Drawing.Color.FromArgb(37, 37, 38);
-            FromRichEdit.Views.SimpleView.Padding = new DevExpress.Portable.PortablePadding(4);
+            FromRichEdit.Views.SimpleView.Padding = new PortablePadding(4);
             FromRichEdit.Views.SimpleView.WordWrap = false;
+            FromRichEdit.DocumentLoaded += RichEdit_DocumentLoaded;
             FromRichEdit.KeyDown += FromRichEdit_KeyDown;
             FromRichEdit.Leave += FromRichEdit_Leave;
             // 
@@ -596,7 +605,7 @@
             layoutControlGroup1.GroupBordersVisible = false;
             layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem3, layoutControlItem5 });
             layoutControlGroup1.Name = "Root";
-            layoutControlGroup1.Size = new System.Drawing.Size(1891, 412);
+            layoutControlGroup1.Size = new System.Drawing.Size(1889, 472);
             layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem3
@@ -604,17 +613,17 @@
             layoutControlItem3.Control = FromRichEdit;
             layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             layoutControlItem3.Name = "layoutControlItem2";
-            layoutControlItem3.Size = new System.Drawing.Size(1801, 392);
+            layoutControlItem3.Size = new System.Drawing.Size(1799, 452);
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             layoutControlItem5.Control = standaloneBarDockControl3;
-            layoutControlItem5.Location = new System.Drawing.Point(1801, 0);
+            layoutControlItem5.Location = new System.Drawing.Point(1799, 0);
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 2, 0);
-            layoutControlItem5.Size = new System.Drawing.Size(70, 392);
+            layoutControlItem5.Size = new System.Drawing.Size(70, 452);
             layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem5.TextVisible = false;
             // 
@@ -628,7 +637,7 @@
             layoutControl1.Name = "layoutControl1";
             layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2256, 764, 1462, 900);
             layoutControl1.Root = Root;
-            layoutControl1.Size = new System.Drawing.Size(1929, 601);
+            layoutControl1.Size = new System.Drawing.Size(1927, 620);
             layoutControl1.TabIndex = 4;
             layoutControl1.Text = "layoutControl1";
             // 
@@ -649,12 +658,12 @@
             ToRichEdit.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
             ToRichEdit.Options.HorizontalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
             ToRichEdit.Options.VerticalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
-            ToRichEdit.Size = new System.Drawing.Size(1835, 577);
+            ToRichEdit.Size = new System.Drawing.Size(1833, 596);
             ToRichEdit.TabIndex = 6;
-            ToRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
             ToRichEdit.Views.SimpleView.BackColor = System.Drawing.Color.FromArgb(37, 37, 38);
-            ToRichEdit.Views.SimpleView.Padding = new DevExpress.Portable.PortablePadding(4);
+            ToRichEdit.Views.SimpleView.Padding = new PortablePadding(4);
             ToRichEdit.Views.SimpleView.WordWrap = false;
+            ToRichEdit.DocumentLoaded += RichEdit_DocumentLoaded;
             ToRichEdit.DoubleClick += ToRichEdit_DoubleClick;
             // 
             // Root
@@ -663,7 +672,7 @@
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1 });
             Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(1929, 601);
+            Root.Size = new System.Drawing.Size(1927, 620);
             Root.TextVisible = false;
             // 
             // layoutControlItem2
@@ -671,17 +680,17 @@
             layoutControlItem2.Control = ToRichEdit;
             layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(1839, 581);
+            layoutControlItem2.Size = new System.Drawing.Size(1837, 600);
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = standaloneBarDockControl2;
-            layoutControlItem1.Location = new System.Drawing.Point(1839, 0);
+            layoutControlItem1.Location = new System.Drawing.Point(1837, 0);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 2, 0);
-            layoutControlItem1.Size = new System.Drawing.Size(70, 581);
+            layoutControlItem1.Size = new System.Drawing.Size(70, 600);
             layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
@@ -692,9 +701,9 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1929, 1310);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(1927, 1329);
             Controls.Add(splitContainerControl1);
             Controls.Add(ribbonControl);
             Controls.Add(barDockControlLeft);
@@ -703,7 +712,7 @@
             Controls.Add(barDockControlTop);
             IconOptions.Image = (System.Drawing.Image)resources.GetObject("Form1.IconOptions.Image");
             Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            MinimumSize = new System.Drawing.Size(1689, 1190);
+            MinimumSize = new System.Drawing.Size(1669, 1180);
             Name = "Form1";
             Ribbon = ribbonControl;
             Text = "LogExpress NET8 - BUG Hunters";
@@ -793,5 +802,6 @@
         private DevExpress.XtraBars.BarButtonItem UpFromBarButtonItem;
         private DevExpress.XtraBars.BarButtonItem DownFromBarButtonItem;
         private DevExpress.XtraBars.BarButtonItem TagToBarButtonItem;
+        private DevExpress.XtraBars.BarButtonItem TagFromBarButtonItem;
     }
 }

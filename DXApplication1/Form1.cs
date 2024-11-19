@@ -25,11 +25,9 @@ namespace LogExpress_NET8
             Color.FromArgb(255, 0, 209, 246),
             Color.FromArgb(255, 83, 186, 122),
             Color.FromArgb(255, 252, 109, 119) };
-
         private List<string> find1Filter { get; set; }
         private List<string> find2Filter { get; set; }
         private List<string> find3Filter { get; set; }
-
         private List<string> textHistory { get; set; }
         private int currentIndex;
         public static string version
@@ -48,24 +46,31 @@ namespace LogExpress_NET8
         public Form1()
         {
             InitializeComponent();
+            ResizeFormToScreenPercentage(0.75);
+
+            //FromRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
+            //ToRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
+            //FromRichEdit.Views.SimpleView.Padding = new PortablePadding(40, 4, 4, 4);
+            //ToRichEdit.Views.SimpleView.Padding = new PortablePadding(40, 4, 4, 4);
 
             textHistory = new List<string>();
-
-            ResizeFormToScreenPercentage(0.75);
 
             var process = Environment.Is64BitProcess ? "x64" : "x86";
             Text += $" - v{version} ({process})";
 
             splitContainerControl1.SplitterPosition = splitContainerControl1.Height / 12 * 4;
 
-            repositoryItemCheckedComboBoxEdit1.Appearance.ForeColor = colors[0];
-            repositoryItemCheckedComboBoxEdit2.Appearance.ForeColor = colors[1];
-            repositoryItemCheckedComboBoxEdit3.Appearance.ForeColor = colors[2];
+            new[] { repositoryItemCheckedComboBoxEdit1, repositoryItemCheckedComboBoxEdit2, repositoryItemCheckedComboBoxEdit3 }
+                .Select((item, index) => new { item, color = colors[index] })
+                .ToList()
+                .ForEach(x => x.item.Appearance.ForeColor = x.color);
 
-            barStaticItem2.Appearance.ForeColor = colors[0];
-            barStaticItem3.Appearance.ForeColor = colors[1];
-            barStaticItem4.Appearance.ForeColor = colors[2];
+            new[] { barStaticItem2, barStaticItem3, barStaticItem4 }
+                .Select((item, index) => new { item, color = colors[index] })
+                .ToList()
+                .ForEach(x => x.item.Appearance.ForeColor = x.color);
         }
+
         private void Form1_Activated(object sender, EventArgs e)
         {
             if (!formLoaded)
@@ -73,10 +78,10 @@ namespace LogExpress_NET8
                 Application.DoEvents();
                 formLoaded = true;
 
-                LoadFromRegistry($@"{subkey}\FindAll1", Find1BarEditItem);
-                LoadFromRegistry($@"{subkey}\FindAll2", Find2BarEditItem);
-                LoadFromRegistry($@"{subkey}\FindAll3", Find3BarEditItem);
-
+                new[] { Find1BarEditItem, Find2BarEditItem, Find3BarEditItem }
+                    .Select((item, index) => $@"{subkey}\FindAll{index + 1}")
+                    .ToList()
+                    .ForEach(key => LoadFromRegistry(key, new[] { Find1BarEditItem, Find2BarEditItem, Find3BarEditItem }[key.Last() - '1']));
 
                 using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subkey))
                 {
@@ -132,10 +137,12 @@ namespace LogExpress_NET8
 
             var text = FromRichEdit.Text;
 
-            AddItemToRepository(Convert.ToString(Find1BarEditItem.EditValue), repositoryItemCheckedComboBoxEdit1);
-            AddItemToRepository(Convert.ToString(Find2BarEditItem.EditValue), repositoryItemCheckedComboBoxEdit2);
-            AddItemToRepository(Convert.ToString(Find3BarEditItem.EditValue), repositoryItemCheckedComboBoxEdit3);
-
+            new[]{
+                new { EditValue = Find1BarEditItem.EditValue, Repository = repositoryItemCheckedComboBoxEdit1 },
+                new { EditValue = Find2BarEditItem.EditValue, Repository = repositoryItemCheckedComboBoxEdit2 },
+                new { EditValue = Find3BarEditItem.EditValue, Repository = repositoryItemCheckedComboBoxEdit3 }}
+                .ToList()
+                .ForEach(x => AddItemToRepository(Convert.ToString(x.EditValue), x.Repository));
             SaveReg();
 
             var l = text
@@ -163,10 +170,10 @@ namespace LogExpress_NET8
             l = FilterListByCheckItem(l, Contains2BarCheckItem, find2Filter);
             l = FilterListByCheckItem(l, Contains3BarCheckItem, find3Filter);
 
-            ToRichEdit.Text = string.Join("\n", l.Distinct());
-            Document document = ToRichEdit.Document;
-            document.DefaultParagraphProperties.LineSpacingType = ParagraphLineSpacing.Multiple;
-            document.DefaultParagraphProperties.LineSpacingMultiplier = 1.2f;
+            ToRichEdit.Text = string.Join("\n", l.Distinct()).TrimEnd('\n').TrimEnd('\r');
+            //Document document = ToRichEdit.Document;
+            //document.DefaultParagraphProperties.LineSpacingType = ParagraphLineSpacing.Multiple;
+            //document.DefaultParagraphProperties.LineSpacingMultiplier = 1.2f;
 
             CustomHighlightText(FromRichEdit);
             CustomHighlightText(ToRichEdit);
@@ -196,7 +203,7 @@ namespace LogExpress_NET8
                             return string.Empty;
                         term = term.Length > 40 ? term.Substring(0, 37) + "..." : term;
                         return $"{term} ({hitCount} hits)";
-                    }).Where(f=> !string.IsNullOrEmpty(f)).ToList());
+                    }).Where(f => !string.IsNullOrEmpty(f)).ToList());
             }
             else
             {
@@ -245,7 +252,6 @@ namespace LogExpress_NET8
                 document.EndUpdate();
             }
         }
-
         private void ClearHighlight(RichEditControl richEditControl)
         {
             var document = richEditControl.Document;
@@ -262,14 +268,13 @@ namespace LogExpress_NET8
                 document.EndUpdate();
             }
         }
-
         private void SetText(string text)
         {
             DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(this, typeof(DXWaitForm), true, true, false);
             FromRichEdit.Text = text;
-            Document document = FromRichEdit.Document;
-            document.DefaultParagraphProperties.LineSpacingType = ParagraphLineSpacing.Multiple;
-            document.DefaultParagraphProperties.LineSpacingMultiplier = 1.2f;
+            //Document document = FromRichEdit.Document;
+            //document.DefaultParagraphProperties.LineSpacingType = ParagraphLineSpacing.Multiple;
+            //document.DefaultParagraphProperties.LineSpacingMultiplier = 1.2f;
             AddTextToHistory(text);
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
@@ -277,7 +282,7 @@ namespace LogExpress_NET8
         {
             if (e.Control && e.KeyCode == Keys.V)
             {
-                SetText(Clipboard.GetText());
+                SetText(Clipboard.GetText().TrimEnd('\n').TrimEnd('\r'));
                 e.SuppressKeyPress = true;
                 e.Handled = true;
             }
@@ -315,7 +320,6 @@ namespace LogExpress_NET8
 
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
-
         private void Clear1BarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
             FromRichEdit.Text = string.Empty;
@@ -327,16 +331,16 @@ namespace LogExpress_NET8
             ToRichEdit.Text = string.Empty;
             ClearMemory();
         }
-
         private void ClearMemory()
         {
             System.Diagnostics.Process.GetCurrentProcess().MinWorkingSet = (IntPtr)3000;
         }
         private void SaveReg()
         {
-            SaveToRegistry($@"{subkey}\FindAll1", Find1BarEditItem);
-            SaveToRegistry($@"{subkey}\FindAll2", Find2BarEditItem);
-            SaveToRegistry($@"{subkey}\FindAll3", Find3BarEditItem);
+            new[] { Find1BarEditItem, Find2BarEditItem, Find3BarEditItem }
+              .Select((item, index) => new { Key = $@"{subkey}\FindAll{index + 1}", Item = item })
+              .ToList()
+              .ForEach(x => SaveToRegistry(x.Key, x.Item));
 
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subkey))
             {
@@ -374,7 +378,6 @@ namespace LogExpress_NET8
         {
             RestoreNextText();
         }
-
         private void AddTextToHistory(string newText)
         {
             if (textHistory.Count() == 0 || textHistory.Last() != newText)
@@ -383,7 +386,6 @@ namespace LogExpress_NET8
                 currentIndex++;
             }
         }
-
         public void RestorePreviousText()
         {
             if (currentIndex > 0)
@@ -392,7 +394,6 @@ namespace LogExpress_NET8
                 FromRichEdit.Text = textHistory[currentIndex];
             }
         }
-
         public void RestoreNextText()
         {
             if (currentIndex < textHistory.Count - 1)
@@ -426,28 +427,23 @@ namespace LogExpress_NET8
                 ((CheckedComboBoxEdit)sender).Text = String.Empty;
             }
         }
-
         private void FromRichEdit_Leave(object sender, EventArgs e)
         {
             AddTextToHistory(FromRichEdit.Text);
 
         }
-
         private void UpToBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
             MoveCaretToParagraph(false, ToRichEdit);
         }
-
         private void DownToBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
             MoveCaretToParagraph(true, ToRichEdit);
         }
-
         private void UpFromBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
             MoveCaretToParagraph(false, FromRichEdit);
         }
-
         private void DownFromBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
             MoveCaretToParagraph(true, FromRichEdit);
@@ -465,7 +461,15 @@ namespace LogExpress_NET8
         }
         private void TagToBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Document document = ToRichEdit.Document;
+            TagDocument(ToRichEdit);
+        }
+        private void TagFromBarButtonItem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TagDocument(FromRichEdit);
+        }
+        private void TagDocument(RichEditControl richEditControl)
+        {
+            Document document = richEditControl.Document;
             DocumentPosition caretPosition = document.CaretPosition;
             int paragraphIndex = document.Paragraphs.Get(caretPosition).Index;
             Paragraph selectedParagraph = document.Paragraphs[paragraphIndex];
@@ -477,6 +481,15 @@ namespace LogExpress_NET8
             else
                 properties.BackColor = highlightColor;
             document.EndUpdateCharacters(properties);
+        }
+        private void RichEdit_DocumentLoaded(object sender, EventArgs e)
+        {
+            Section section = ((RichEditControl)sender).Document.Sections[0];
+            SectionLineNumbering lineNumbering = section.LineNumbering;
+            lineNumbering.CountBy = 1;
+            lineNumbering.Start = 1;
+            lineNumbering.Distance = 0.1f;
+            lineNumbering.RestartType = LineNumberingRestart.NewSection;
         }
     }
 }
