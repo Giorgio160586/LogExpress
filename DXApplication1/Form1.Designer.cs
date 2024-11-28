@@ -1,6 +1,6 @@
 ﻿using DevExpress.Portable;
 
-namespace LogExpress_NET8
+namespace LogExpressNET9
 {
     partial class Form1
     {
@@ -149,7 +149,7 @@ namespace LogExpress_NET8
             ribbonControl.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
             ribbonControl.ShowQatLocationSelector = false;
             ribbonControl.ShowToolbarCustomizeItem = false;
-            ribbonControl.Size = new System.Drawing.Size(1927, 308);
+            ribbonControl.Size = new System.Drawing.Size(1927, 296);
             ribbonControl.Toolbar.ShowCustomizeItem = false;
             // 
             // skinRibbonGalleryBarItem
@@ -333,20 +333,21 @@ namespace LogExpress_NET8
             // 
             splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainerControl1.Horizontal = false;
-            splitContainerControl1.Location = new System.Drawing.Point(0, 308);
+            splitContainerControl1.Location = new System.Drawing.Point(0, 296);
             splitContainerControl1.Margin = new System.Windows.Forms.Padding(0);
             splitContainerControl1.Name = "splitContainerControl1";
             // 
             // splitContainerControl1.Panel1
             // 
             splitContainerControl1.Panel1.Controls.Add(layoutControl2);
+            splitContainerControl1.Panel1.MinSize = 220;
             splitContainerControl1.Panel1.Text = "Panel1";
             // 
             // splitContainerControl1.Panel2
             // 
             splitContainerControl1.Panel2.Controls.Add(layoutControl1);
             splitContainerControl1.Panel2.Text = "Panel2";
-            splitContainerControl1.Size = new System.Drawing.Size(1927, 973);
+            splitContainerControl1.Size = new System.Drawing.Size(1927, 977);
             splitContainerControl1.SplitterPosition = 331;
             splitContainerControl1.TabIndex = 4;
             // 
@@ -368,11 +369,11 @@ namespace LogExpress_NET8
             // 
             standaloneBarDockControl3.CausesValidation = false;
             standaloneBarDockControl3.IsVertical = true;
-            standaloneBarDockControl3.Location = new System.Drawing.Point(1809, 12);
+            standaloneBarDockControl3.Location = new System.Drawing.Point(1823, 12);
             standaloneBarDockControl3.Manager = barManager1;
             standaloneBarDockControl3.Margin = new System.Windows.Forms.Padding(1362046);
             standaloneBarDockControl3.Name = "standaloneBarDockControl3";
-            standaloneBarDockControl3.Size = new System.Drawing.Size(70, 450);
+            standaloneBarDockControl3.Size = new System.Drawing.Size(56, 394);
             standaloneBarDockControl3.Text = "standaloneBarDockControl3";
             // 
             // barManager1
@@ -472,11 +473,11 @@ namespace LogExpress_NET8
             // 
             standaloneBarDockControl2.CausesValidation = false;
             standaloneBarDockControl2.IsVertical = true;
-            standaloneBarDockControl2.Location = new System.Drawing.Point(1847, 12);
+            standaloneBarDockControl2.Location = new System.Drawing.Point(1861, 12);
             standaloneBarDockControl2.Manager = barManager1;
             standaloneBarDockControl2.Margin = new System.Windows.Forms.Padding(397621152);
             standaloneBarDockControl2.Name = "standaloneBarDockControl2";
-            standaloneBarDockControl2.Size = new System.Drawing.Size(70, 330);
+            standaloneBarDockControl2.Size = new System.Drawing.Size(56, 290);
             standaloneBarDockControl2.Text = "standaloneBarDockControl2";
             // 
             // bar2
@@ -553,9 +554,9 @@ namespace LogExpress_NET8
             // 
             barDockControlBottom.CausesValidation = false;
             barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            barDockControlBottom.Location = new System.Drawing.Point(0, 1281);
+            barDockControlBottom.Location = new System.Drawing.Point(0, 1273);
             barDockControlBottom.Manager = barManager1;
-            barDockControlBottom.Size = new System.Drawing.Size(1927, 48);
+            barDockControlBottom.Size = new System.Drawing.Size(1927, 56);
             // 
             // barDockControlLeft
             // 
@@ -563,7 +564,7 @@ namespace LogExpress_NET8
             barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             barDockControlLeft.Location = new System.Drawing.Point(0, 0);
             barDockControlLeft.Manager = barManager1;
-            barDockControlLeft.Size = new System.Drawing.Size(0, 1281);
+            barDockControlLeft.Size = new System.Drawing.Size(0, 1273);
             // 
             // barDockControlRight
             // 
@@ -571,7 +572,7 @@ namespace LogExpress_NET8
             barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             barDockControlRight.Location = new System.Drawing.Point(1927, 0);
             barDockControlRight.Manager = barManager1;
-            barDockControlRight.Size = new System.Drawing.Size(0, 1281);
+            barDockControlRight.Size = new System.Drawing.Size(0, 1273);
             // 
             // FromRichEdit
             // 
@@ -590,7 +591,7 @@ namespace LogExpress_NET8
             FromRichEdit.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
             FromRichEdit.Options.HorizontalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
             FromRichEdit.Options.VerticalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
-            FromRichEdit.Size = new System.Drawing.Size(1795, 448);
+            FromRichEdit.Size = new System.Drawing.Size(1809, 392);
             FromRichEdit.TabIndex = 6;
             FromRichEdit.Views.SimpleView.BackColor = System.Drawing.Color.FromArgb(37, 37, 38);
             FromRichEdit.Views.SimpleView.Padding = new PortablePadding(4);
@@ -605,7 +606,7 @@ namespace LogExpress_NET8
             layoutControlGroup1.GroupBordersVisible = false;
             layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem3, layoutControlItem5 });
             layoutControlGroup1.Name = "Root";
-            layoutControlGroup1.Size = new System.Drawing.Size(1889, 472);
+            layoutControlGroup1.Size = new System.Drawing.Size(1889, 416);
             layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem3
@@ -613,17 +614,17 @@ namespace LogExpress_NET8
             layoutControlItem3.Control = FromRichEdit;
             layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             layoutControlItem3.Name = "layoutControlItem2";
-            layoutControlItem3.Size = new System.Drawing.Size(1799, 452);
+            layoutControlItem3.Size = new System.Drawing.Size(1813, 396);
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             layoutControlItem5.Control = standaloneBarDockControl3;
-            layoutControlItem5.Location = new System.Drawing.Point(1799, 0);
+            layoutControlItem5.Location = new System.Drawing.Point(1813, 0);
             layoutControlItem5.Name = "layoutControlItem5";
             layoutControlItem5.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 2, 0);
-            layoutControlItem5.Size = new System.Drawing.Size(70, 452);
+            layoutControlItem5.Size = new System.Drawing.Size(56, 396);
             layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem5.TextVisible = false;
             // 
@@ -637,7 +638,7 @@ namespace LogExpress_NET8
             layoutControl1.Name = "layoutControl1";
             layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(2256, 764, 1462, 900);
             layoutControl1.Root = Root;
-            layoutControl1.Size = new System.Drawing.Size(1927, 620);
+            layoutControl1.Size = new System.Drawing.Size(1927, 624);
             layoutControl1.TabIndex = 4;
             layoutControl1.Text = "layoutControl1";
             // 
@@ -658,7 +659,7 @@ namespace LogExpress_NET8
             ToRichEdit.Options.DocumentSaveOptions.CurrentFormat = DevExpress.XtraRichEdit.DocumentFormat.PlainText;
             ToRichEdit.Options.HorizontalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
             ToRichEdit.Options.VerticalScrollbar.Visibility = DevExpress.XtraRichEdit.RichEditScrollbarVisibility.Visible;
-            ToRichEdit.Size = new System.Drawing.Size(1833, 596);
+            ToRichEdit.Size = new System.Drawing.Size(1847, 600);
             ToRichEdit.TabIndex = 6;
             ToRichEdit.Views.SimpleView.BackColor = System.Drawing.Color.FromArgb(37, 37, 38);
             ToRichEdit.Views.SimpleView.Padding = new PortablePadding(4);
@@ -672,7 +673,7 @@ namespace LogExpress_NET8
             Root.GroupBordersVisible = false;
             Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] { layoutControlItem2, layoutControlItem1 });
             Root.Name = "Root";
-            Root.Size = new System.Drawing.Size(1927, 620);
+            Root.Size = new System.Drawing.Size(1927, 624);
             Root.TextVisible = false;
             // 
             // layoutControlItem2
@@ -680,17 +681,17 @@ namespace LogExpress_NET8
             layoutControlItem2.Control = ToRichEdit;
             layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(1837, 600);
+            layoutControlItem2.Size = new System.Drawing.Size(1851, 604);
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             layoutControlItem1.Control = standaloneBarDockControl2;
-            layoutControlItem1.Location = new System.Drawing.Point(1837, 0);
+            layoutControlItem1.Location = new System.Drawing.Point(1851, 0);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 2, 0);
-            layoutControlItem1.Size = new System.Drawing.Size(70, 600);
+            layoutControlItem1.Size = new System.Drawing.Size(56, 604);
             layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem1.TextVisible = false;
             // 
@@ -715,7 +716,7 @@ namespace LogExpress_NET8
             MinimumSize = new System.Drawing.Size(1669, 1180);
             Name = "Form1";
             Ribbon = ribbonControl;
-            Text = "LogExpress NET8 - BUG Hunters";
+            Text = "LogExpress NET9 - BUG Hunters";
             Activated += Form1_Activated;
             ((System.ComponentModel.ISupportInitialize)ribbonControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)repositoryItemTextEdit2).EndInit();

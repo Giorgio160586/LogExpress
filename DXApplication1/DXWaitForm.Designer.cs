@@ -1,4 +1,4 @@
-﻿namespace LogExpress_NET8
+﻿namespace LogExpressNET9
 {
     partial class DXWaitForm
     {

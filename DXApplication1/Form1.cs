@@ -15,7 +15,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace LogExpress_NET8
+namespace LogExpressNET9
 {
     public partial class Form1 : RibbonForm
     {
@@ -46,7 +46,7 @@ namespace LogExpress_NET8
         public Form1()
         {
             InitializeComponent();
-            ResizeFormToScreenPercentage(0.75);
+            ResizeFormToScreenPercentage(0.70);
 
             //FromRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;
             //ToRichEdit.Views.SimpleView.AllowDisplayLineNumbers = true;

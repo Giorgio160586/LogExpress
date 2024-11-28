@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace LogExpress_NET8
+namespace LogExpressNET9
 {
     internal static class Program
     {

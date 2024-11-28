@@ -1,7 +1,7 @@
 ﻿using DevExpress.XtraWaitForm;
 using System;
 
-namespace LogExpress_NET8
+namespace LogExpressNET9
 {
     public partial class DXWaitForm : WaitForm
     {
